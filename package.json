@@ -1,5 +1,5 @@
 {
-  "name": "Eventloop",
+  "name": "eventloop",
   "version": "0.1.0",
   "private": true,
   "author": {
@@ -27,10 +27,13 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "lucide-react": "^0.309.0",
+    "mongodb": "^6.3.0",
+    "mongoose": "^8.1.0",
     "next": "14.0.4",
-    "next-auth": "^4.24.5",
+    "query-string": "^8.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "svix": "^1.15.0",
     "tailwindcss-animate": "^1.0.7",
     "uploadthing": "^6.1.1"
   },

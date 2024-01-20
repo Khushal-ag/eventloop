@@ -220,7 +220,7 @@ body {
   .button {
     @apply rounded-full h-[54px] p-regular-16;
   }
-
+   
   .select-item {
     @apply py-3 cursor-pointer  focus:bg-primary-50;
   }
