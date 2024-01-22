@@ -3,8 +3,9 @@
 ![views] ![stars] ![forks] ![issues] ![license] ![repo-size]
 
 <picture>
-
-  <img alt="Eventloop" src="./public/assets/images/logo.svg">
+  <source media="(prefers-color-scheme: dark,(width='auto'))" srcset="./public/assets/images/logo-dark.svg">
+  <source media="(prefers-color-scheme: light,(width='auto'))" srcset="./public/assets/images/logo.svg">
+  <img alt="Eventloop" src="./public/assets/images/logo.svg" width='auto'>
 </picture>
 
 ## An event management platform where user can create and manage events
