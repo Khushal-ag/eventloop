@@ -1,4 +1,5 @@
 import Provider from "@/components/shared/Provider";
+import { Toaster } from "@/components/ui/sonner";
 
 import "@/styles/globals.css";
 
@@ -28,6 +29,7 @@ export default function RootLayout({
       <html lang="en">
         <body className={poppins.variable} suppressHydrationWarning>
           {children}
+          <Toaster />
         </body>
       </html>
     </Provider>
