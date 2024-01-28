@@ -35,8 +35,7 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
           <DeleteConfirmation eventId={event._id} />
         </div>
       )}
-      <Link
-        href={`/events/${event._id}`}
+      <div
         className="flex min-h-[230px] flex-col gap-3 p-5 md:gap-4"
       >
         {!hidePrice && (
@@ -71,7 +70,7 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
             </Link>
           )}
         </div>
-      </Link>
+      </div>
     </div>
   );
 };
