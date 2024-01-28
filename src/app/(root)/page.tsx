@@ -1,9 +1,23 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { getAllEvents } from "@/lib/actions/event.actions";
+import { IEvent } from "@/lib/database/models/event.model";
+import Collection from "@/components/shared/Collection";
 import { Button } from "@/components/ui/button";
 
-function Home() {
+type EventData = {
+  data: IEvent[];
+  totalPages: number;
+};
+async function Home() {
+  const events = (await getAllEvents({
+    query: "",
+    category: "",
+    page: 1,
+    limit: 6,
+  })) as EventData;
+
   return (
     <>
       <section className="bg-primary-50 bg-dotted-pattern bg-contain py-5 md:py-10">
@@ -43,6 +57,16 @@ function Home() {
             Category Filter
           </div>
         </div>
+
+        <Collection
+          data={events?.data}
+          emptyTitle="No events found"
+          emptyStateSubtext="Come back later"
+          collectionType="All_Events"
+          limit={6}
+          page={1}
+          totalPages={2}
+        />
       </section>
     </>
   );

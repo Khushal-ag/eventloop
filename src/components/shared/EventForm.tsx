@@ -26,18 +26,28 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import { useRouter } from "next/navigation";
 
-import { createEvent } from "@/lib/actions/event.actions";
+import { createEvent, updateEvent } from "@/lib/actions/event.actions";
+import { IEvent } from "@/lib/database/models/event.model";
 import { useUploadThing } from "@/lib/uploadthing";
 import { Checkbox } from "../ui/checkbox";
 
 type EventFormProps = {
   userId: string;
   type: "Create" | "Update";
+  event?: IEvent;
+  eventId?: string;
 };
 
-const EventForm = ({ userId, type }: EventFormProps) => {
+const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
   const [files, setFiles] = useState<File[]>([]);
-  const initialValues = eventDefaultValues;
+  const initialValues =
+    event && type === "Update"
+      ? {
+          ...event,
+          startDateTime: new Date(event.startDateTime),
+          endDateTime: new Date(event.endDateTime),
+        }
+      : eventDefaultValues;
   const { startUpload } = useUploadThing("imageUploader");
   const router = useRouter();
 
@@ -59,14 +69,33 @@ const EventForm = ({ userId, type }: EventFormProps) => {
     }
     if (type === "Create") {
       try {
-        const newEvent = await createEvent({
+        const newEvent = (await createEvent({
           event: { ...values, imageUrl: uploadedImageUrl },
           userId,
           path: "/profile",
-        });
+        })) as IEvent;
         if (newEvent) {
-          // @ts-expect-error ignore for now
           router.push(`/events/${newEvent._id}`);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    if (type === "Update") {
+      if (!eventId) {
+        router.back();
+        return;
+      }
+      try {
+        const updatedEvent = (await updateEvent({
+          userId,
+          event: { ...values, imageUrl: uploadedImageUrl, _id: eventId },
+          path: `/events/${eventId}`,
+        })) as IEvent;
+
+        if (updatedEvent) {
+          form.reset();
+          router.push(`/events/${updatedEvent._id}`);
         }
       } catch (err) {
         console.log(err);
@@ -273,7 +302,7 @@ const EventForm = ({ userId, type }: EventFormProps) => {
                               </label>
                               <Checkbox
                                 id="isFree"
-                                className="mr-2 h-5 w-5 border-2 border-primary-500"
+                                className="mr-2 size-5 border-2 border-primary-500"
                                 onCheckedChange={field.onChange}
                                 checked={field.value}
                               />

@@ -2,7 +2,6 @@
 
 import { Dispatch, SetStateAction, useCallback } from "react";
 import Image from "next/image";
-import type { FileWithPath } from "@uploadthing/react";
 import { useDropzone } from "@uploadthing/react/hooks";
 import { generateClientDropzoneAccept } from "uploadthing/client";
 
@@ -16,17 +15,14 @@ type FileUploaderProps = {
 };
 
 export function FileUploader({
-  onFieldChange,
   imageUrl,
+  onFieldChange,
   setFiles,
 }: FileUploaderProps) {
-  const onDrop = useCallback(
-    (acceptedFiles: FileWithPath[]) => {
-      setFiles(acceptedFiles);
-      onFieldChange(convertFileToUrl(acceptedFiles[0]));
-    },
-    [onFieldChange, setFiles]
-  );
+  const onDrop = useCallback((acceptedFiles: File[]) => {
+    setFiles(acceptedFiles);
+    onFieldChange(convertFileToUrl(acceptedFiles[0]));
+  }, []);
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
@@ -41,7 +37,7 @@ export function FileUploader({
       <input {...getInputProps()} className="cursor-pointer" />
 
       {imageUrl ? (
-        <div className="flex h-full w-full flex-1 justify-center ">
+        <div className="flex size-full flex-1 justify-center ">
           <Image
             src={imageUrl}
             alt="image"
