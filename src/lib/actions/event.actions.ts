@@ -9,10 +9,11 @@ import {
   GetRelatedEventsByCategoryParams,
   UpdateEventParams,
 } from "@/types";
+import type { Query } from "mongoose";
 
 import { connectToDatabase } from "@/lib/database";
 import Category from "@/lib/database/models/category.model";
-import Event from "@/lib/database/models/event.model";
+import Event, { IEvent } from "@/lib/database/models/event.model";
 import User from "@/lib/database/models/user.model";
 import { handleError } from "@/lib/utils";
 
@@ -20,8 +21,7 @@ const getCategoryByName = async (name: string) => {
   return Category.findOne({ name: { $regex: name, $options: "i" } });
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const populateEvent = (query: any) => {
+const populateEvent = <T>(query: Query<T, T, T, T>) => {
   return query
     .populate({
       path: "organizer",
@@ -61,7 +61,7 @@ export async function getEventById(eventId: string) {
 
     if (!event) throw new Error("Event not found");
 
-    return JSON.parse(JSON.stringify(event));
+    return JSON.parse(JSON.stringify(event)) as IEvent;
   } catch (error) {
     handleError(error);
   }

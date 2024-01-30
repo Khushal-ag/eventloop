@@ -1,13 +1,27 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Event, SearchParamProps } from "@/types";
+import { SearchParamProps } from "@/types";
 
-import { getEventById } from "@/lib/actions/event.actions";
+import {
+  getEventById,
+  getRelatedEventsByCategory,
+} from "@/lib/actions/event.actions";
+import { IEvent } from "@/lib/database/models/event.model";
 import { formatDateTime } from "@/lib/utils";
+import CheckoutButton from "@/components/shared/CheckoutButton";
+import Collection from "@/components/shared/Collection";
 
-const EventDetails = async ({ params: { id } }: SearchParamProps) => {
-  const event = (await getEventById(id)) as Event;
+const EventDetails = async ({
+  params: { id },
+  searchParams,
+}: SearchParamProps) => {
+  const event = (await getEventById(id))!;
 
+  const relatedEvents = await getRelatedEventsByCategory({
+    categoryId: event.category._id,
+    eventId: event._id,
+    page: searchParams.page as string,
+  });
   if (event)
     return (
       <>
@@ -41,7 +55,7 @@ const EventDetails = async ({ params: { id } }: SearchParamProps) => {
                   </p>
                 </div>
               </div>
-              {/* {TODO:{checkout button}} */}
+              <CheckoutButton event={event} />
               <div className="flex flex-col gap-5">
                 <div className="flex gap-2 md:gap-3">
                   <Image
@@ -81,11 +95,25 @@ const EventDetails = async ({ params: { id } }: SearchParamProps) => {
                   {event.description}
                 </p>
                 <p className="p-medium-16 lg:p-regular-18 truncate text-primary-500 underline">
-                  <Link href={event.url}>{event.url}</Link>
+                  <Link href={`${event.url}`} target="_blank">
+                    {event.url}
+                  </Link>
                 </p>
               </div>
             </div>
           </div>
+        </section>
+        <section className="wrapper my-8 flex flex-col gap-8 md:gap-12">
+          <h2 className="h2-bold">Related Events</h2>
+          <Collection
+            data={relatedEvents?.data as IEvent[]}
+            emptyTitle="No events found"
+            emptyStateSubtext="Come back later"
+            collectionType="All_Events"
+            limit={6}
+            page={1}
+            totalPages={2}
+          />
         </section>
       </>
     );
