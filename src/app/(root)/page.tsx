@@ -13,6 +13,7 @@ type EventData = {
   data: IEvent[];
   totalPages: number;
 };
+
 export default async function Home({ searchParams }: SearchParamProps) {
   const page = Number(searchParams?.page) || 1;
   const searchText = (searchParams?.query as string) || "";

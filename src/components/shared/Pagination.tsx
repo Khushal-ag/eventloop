@@ -10,9 +10,11 @@ type PaginationProps = {
   page: number | string;
   totalPages: number;
 };
+
 const Pagination = ({ urlParamName, page, totalPages }: PaginationProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
+
   const onClick = (btnType: string) => {
     const pageValue = btnType === "next" ? Number(page) + 1 : Number(page) - 1;
 
@@ -21,8 +23,10 @@ const Pagination = ({ urlParamName, page, totalPages }: PaginationProps) => {
       key: urlParamName || "page",
       value: pageValue.toString(),
     });
+
     router.push(newUrl, { scroll: false });
   };
+
   return (
     <div className="flex gap-2">
       <Button

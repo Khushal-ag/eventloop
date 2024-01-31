@@ -23,8 +23,10 @@ const EventDetails = async ({
     eventId: event._id,
     page: searchParams.page as string,
   });
+
   const { sessionClaims } = auth();
   const userId = sessionClaims?.userId as string;
+
   if (event)
     return (
       <>
