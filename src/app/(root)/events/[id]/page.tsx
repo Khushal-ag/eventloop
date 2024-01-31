@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { SearchParamProps } from "@/types";
+import { auth } from "@clerk/nextjs";
 
 import {
   getEventById,
@@ -22,6 +23,8 @@ const EventDetails = async ({
     eventId: event._id,
     page: searchParams.page as string,
   });
+  const { sessionClaims } = auth();
+  const userId = sessionClaims?.userId as string;
   if (event)
     return (
       <>
@@ -40,7 +43,7 @@ const EventDetails = async ({
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
                   <div className="flex gap-3">
                     <p className="p-bold-20 rounded-full bg-green-500/10 px-5 py-2 text-green-700">
-                      {event.isFree ? "FREE" : `${event.price}`}
+                      {event.isFree ? "FREE" : `$${event.price}`}
                     </p>
                     <p className="p-medium-16 rounded-full bg-grey-500/10 px-4 py-2.5 text-grey-500">
                       {event.category.name}
@@ -55,7 +58,9 @@ const EventDetails = async ({
                   </p>
                 </div>
               </div>
-              <CheckoutButton event={event} />
+              {event.organizer._id.toString() !== userId ? (
+                <CheckoutButton event={event} />
+              ) : null}
               <div className="flex flex-col gap-5">
                 <div className="flex gap-2 md:gap-3">
                   <Image
@@ -64,7 +69,7 @@ const EventDetails = async ({
                     height={32}
                     width={32}
                   />
-                  <div className="p-medium-16 lg:p-regular-20 flex flex-wrap items-center">
+                  <div className="p-medium-16 lg:p-regular-20 flex flex-wrap items-center gap-1">
                     <p>
                       {formatDateTime(event.startDateTime).dateOnly} -{" "}
                       {formatDateTime(event.startDateTime).timeOnly}
@@ -107,12 +112,12 @@ const EventDetails = async ({
           <h2 className="h2-bold">Related Events</h2>
           <Collection
             data={relatedEvents?.data as IEvent[]}
-            emptyTitle="No events found"
+            emptyTitle="No Events Found"
             emptyStateSubtext="Come back later"
             collectionType="All_Events"
             limit={6}
-            page={1}
-            totalPages={2}
+            page={searchParams.page as string}
+            totalPages={relatedEvents?.totalPages}
           />
         </section>
       </>
