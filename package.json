@@ -44,7 +44,7 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.2",
     "sonner": "^1.4.41",
-    "stripe": "^14.23.0",
+    "stripe": "^15.8.0",
     "svix": "^1.21.0",
     "tailwindcss-animate": "^1.0.7",
     "uploadthing": "^6.7.0",

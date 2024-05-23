@@ -84,8 +84,8 @@ dependencies:
     specifier: ^1.4.41
     version: 1.4.41(react-dom@18.2.0)(react@18.2.0)
   stripe:
-    specifier: ^14.23.0
-    version: 14.23.0
+    specifier: ^15.8.0
+    version: 15.8.0
   svix:
     specifier: ^1.21.0
     version: 1.21.0
@@ -4457,8 +4457,8 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /stripe@14.23.0:
-    resolution: {integrity: sha512-OPD7LqBmni6uDdqA05GGgMZyyRWxJOehONBNC9tYgY4Uh089EtXd6QLIgRGrqTDlQH3cA2BXo848nxwa/zsQzw==}
+  /stripe@15.8.0:
+    resolution: {integrity: sha512-7eEPMgehd1I16cXeP7Rcn/JKkPWIadB9vGIeE+vbCzQXaY5R95AoNmkZx0vmlu1H4QIDs7j1pYIKPRm9Dr4LKg==}
     engines: {node: '>=12.*'}
     dependencies:
       '@types/node': 20.12.2
