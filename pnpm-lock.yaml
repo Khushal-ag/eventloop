@@ -36,8 +36,8 @@ dependencies:
     specifier: ^1.0.2
     version: 1.0.2(@types/react@18.2.73)(react@18.2.0)
   '@stripe/stripe-js':
-    specifier: ^3.1.0
-    version: 3.1.0
+    specifier: ^4.9.0
+    version: 4.9.0
   '@types/react-datepicker':
     specifier: ^6.2.0
     version: 6.2.0(react-dom@18.2.0)(react@18.2.0)
@@ -1363,8 +1363,8 @@ packages:
     resolution: {integrity: sha512-1bnPQqSxSuc3Ii6MhBysoWCg58j97aUjuCSZrGSmDxNqtytIi0k8utUenAwTZN4V5mXXYGsVUI9zeBqy+jBOSQ==}
     dev: false
 
-  /@stripe/stripe-js@3.1.0:
-    resolution: {integrity: sha512-7+ciE35i8NZ6l4FiO1qFkBoZ64ul6B2ZhBVyygB+e/2EZa2WLUyjoxrP53SagnUW7+/q25nDyDLzQq5F0ebOEw==}
+  /@stripe/stripe-js@4.9.0:
+    resolution: {integrity: sha512-tMPZQZZXGWyNX7hbgenq+1xEj2oigJ54XddbtSX36VedoKsPBq7dxwRXu4Xd5FdpT3JDyyDtnmvYkaSnH1yHTQ==}
     engines: {node: '>=12.16'}
     dev: false
 
